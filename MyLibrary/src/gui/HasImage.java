@@ -17,7 +17,6 @@ public class HasImage implements SessionIO {
 
     private File file = null; // the image file
     private BufferedImage image = null; // the image
-    private boolean tried = false; // set to true once we try to load the image
 
     // ------------------ Constructor -------------------
 
@@ -38,9 +37,12 @@ public class HasImage implements SessionIO {
     }
     
     private void loadImage() {
-        tried = true;
         try { image = ImageIO.read(file); } catch (IOException e) {}
     }
+    
+    // -------------------- Clearing --------------------
+    
+    public void clearImage() { image = null; }
     
     // -------------------- Deep Copy --------------------
     
@@ -51,8 +53,6 @@ public class HasImage implements SessionIO {
         HasImage newHasImage = new HasImage();
         // Copy the file:
         newHasImage.setFile( new File(this.file.toURI()) );
-        // Copy the tried information:
-        newHasImage.setTried( this.tried );
         // Check for an image:
         if (this.image==null) { return newHasImage; }
         // Copy the image:
@@ -66,9 +66,6 @@ public class HasImage implements SessionIO {
     }
     private void setFile(File f) {
         file = f;
-    }
-    private void setTried(boolean t) {
-        tried = t;
     }
     private void setImage(BufferedImage im) {
         image = im;
@@ -95,9 +92,8 @@ public class HasImage implements SessionIO {
      * @return  */
     public BufferedImage getImage() {
         // Try to read the image if necessary:
-        if ( image==null && !tried ) {
+        if ( image==null ) {
             // Try to read the image file:
-            tried = true;
             try { image = ImageIO.read(file); } catch (IOException e) {}
         }
         return image;
@@ -119,6 +115,13 @@ public class HasImage implements SessionIO {
 //    }
 
     // -------------------- Public Methods --------------------
+    
+    /** Returns true if the file for this object is the same as the supplied file.
+     * @param f
+     * @return  */
+    public boolean compareFile(File f) {
+        return ( file.compareTo(f) == 0 );
+    }
 
     /** Returns the name of the file name (the file name minus path and extension).
      * @return  */
@@ -185,7 +188,6 @@ public class HasImage implements SessionIO {
         if (!file.exists()) { return null; } // (return successfully) the file will have to be relocated when needed
         
         // Load the image:
-        tried = true;
         try { image = ImageIO.read(file); } catch (IOException e) {}
         
         // Return successfully:
