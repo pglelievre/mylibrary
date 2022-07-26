@@ -67,6 +67,8 @@ public class MyPoint3DVector implements SessionIO {
         }
         return output;
     }
+    
+    // -------------------- SectionIO Methods --------------------
 
     @Override
     public boolean writeSessionInformation(BufferedWriter writer) {

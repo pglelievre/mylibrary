@@ -473,6 +473,8 @@ public class MyPoint2DVector implements SessionIO {
         return a;
 
     }
+    
+    // -------------------- SectionIO Methods --------------------
 
     @Override
     public boolean writeSessionInformation(BufferedWriter writer) {
