@@ -45,7 +45,7 @@ public class OpenAndSave {
     
     // -------------------- Public methods --------------------
 
-    public boolean openSession(JFrame frame, String title, FileFilter filter) {
+    public boolean chooseOpenSession(JFrame frame, String title, FileFilter filter) {
         // Ask for the name of the saved session file:
         JFileChooser chooser = new JFileChooser();
         if (sessionFile==null) {
@@ -74,7 +74,7 @@ public class OpenAndSave {
         return true;
     }
 
-    public boolean saveSession(JFrame frame, String title, FileFilter filter, boolean saveAs) {
+    public boolean chooseSaveSession(JFrame frame, String title, FileFilter filter, boolean saveAs) {
         // Ask for the file name for saving if required:
         if ( !saveAs && getSessionFile()!=null ) { return true; }
         JFileChooser chooser = new JFileChooser();
