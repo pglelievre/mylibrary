@@ -1,12 +1,16 @@
 package geometry;
 
+import fileio.FileUtils;
+import fileio.SessionIO;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 /** A Vector of MyPoint3D objects.
  * Many of the methods in this class are wrappers for methods of the same name in the Java Vector class.
  * @author Peter Lelievre
  */
-public class MyPoint3DVector {
+public class MyPoint3DVector implements SessionIO {
 
     // -------------------- Properties -------------------
 
@@ -62,6 +66,64 @@ public class MyPoint3DVector {
             output = output + (i+1) + ". " + this.get(i).toStringEquals() + "\n";
         }
         return output;
+    }
+
+    @Override
+    public boolean writeSessionInformation(BufferedWriter writer) {
+        
+        // Write the number of points:
+        String textLine = Integer.toString(size());
+        if (!FileUtils.writeLine(writer,textLine)) { return false; }
+        
+        // Write the points:
+        for ( int i=0 ; i<size() ; i++ ) {
+            MyPoint3D p = get(i);
+            textLine = p.toStringSpaces();
+            if (!FileUtils.writeLine(writer,textLine)) { return false; }
+        }
+        
+        // Return successfully:
+        return true;
+        
+    }
+
+    @Override
+    public String readSessionInformation(BufferedReader reader, boolean merge) {
+        
+        // Clear the object:
+        clear();
+        
+        // Read the number of points:
+        String textLine = FileUtils.readLine(reader);
+        if (textLine==null) { return "Reading number of 3D points."; }
+        textLine = textLine.trim();
+        String[] ss = textLine.split("[ ]+");
+        if (ss.length<1) { return "Not enough values on number of 3D points line."; }
+        int np;
+        try {
+            np = Integer.parseInt(ss[0].trim()); // converts to integer
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) { return "Parsing number of 3D points."; }
+
+        // Read the points:
+        for ( int i=0 ; i<np; i++ ) {
+            textLine = FileUtils.readLine(reader);
+            if (textLine==null) { return "Reading a 3D point."; }
+            textLine = textLine.trim();
+            ss = textLine.split("[ ]+");
+            if (ss.length<3) { return "Not enough values on 3D point line."; }
+            double x,y,z;
+            try {
+                x = Double.parseDouble(ss[0].trim()); // converts to double
+                y = Double.parseDouble(ss[1].trim()); // converts to double
+                z = Double.parseDouble(ss[2].trim()); // converts to double
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) { return "Parsing a 3D point."; }
+            MyPoint3D p = new MyPoint3D(x,y,z);
+            add(p);
+        }
+        
+        // Return successfully:
+        return null;
+        
     }
     
 }

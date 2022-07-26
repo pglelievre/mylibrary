@@ -1,13 +1,17 @@
 package geometry;
 
+import fileio.FileUtils;
+import fileio.SessionIO;
 import java.awt.geom.GeneralPath;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 /** A Vector of MyPoint2D objects.
  * Many of the methods in this class are wrappers for methods of the same name in the Java Vector class.
  * @author Peter Lelievre
  */
-public class MyPoint2DVector {
+public class MyPoint2DVector implements SessionIO {
 
     // -------------------- Properties -------------------
 
@@ -468,6 +472,63 @@ public class MyPoint2DVector {
         a = 0.5*a;
         return a;
 
+    }
+
+    @Override
+    public boolean writeSessionInformation(BufferedWriter writer) {
+        
+        // Write the number of points:
+        String textLine = Integer.toString(size());
+        if (!FileUtils.writeLine(writer,textLine)) { return false; }
+        
+        // Write the points:
+        for ( int i=0 ; i<size() ; i++ ) {
+            MyPoint2D p = get(i);
+            textLine = p.toStringSpaces();
+            if (!FileUtils.writeLine(writer,textLine)) { return false; }
+        }
+        
+        // Return successfully:
+        return true;
+        
+    }
+
+    @Override
+    public String readSessionInformation(BufferedReader reader, boolean merge) {
+        
+        // Clear the object:
+        clear();
+        
+        // Read the number of points:
+        String textLine = FileUtils.readLine(reader);
+        if (textLine==null) { return "Reading number of 2D points."; }
+        textLine = textLine.trim();
+        String[] ss = textLine.split("[ ]+");
+        if (ss.length<1) { return "Not enough values on number of 2D points line."; }
+        int np;
+        try {
+            np = Integer.parseInt(ss[0].trim()); // converts to integer
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) { return "Parsing number of 2D points."; }
+
+        // Read the points:
+        for ( int i=0 ; i<np; i++ ) {
+            textLine = FileUtils.readLine(reader);
+            if (textLine==null) { return "Reading a 2D point."; }
+            textLine = textLine.trim();
+            ss = textLine.split("[ ]+");
+            if (ss.length<2) { return "Not enough values on 2D point line."; }
+            double x,y;
+            try {
+                x = Double.parseDouble(ss[0].trim()); // converts to double
+                y = Double.parseDouble(ss[1].trim()); // converts to double
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) { return "Parsing a 2D point."; }
+            MyPoint2D p = new MyPoint2D(x,y);
+            add(p);
+        }
+        
+        // Return successfully:
+        return null;
+        
     }
     
 }
