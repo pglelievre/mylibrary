@@ -23,6 +23,13 @@ public class MyPoint3DVector {
     public void clear() {
         vector.clear();
     }
+    
+    /** Returns the size of the vector.
+     * @return The size of the vector.
+     */
+    public int size() {
+        return vector.size();
+    }
 
     /** Returns a specified element of the vector.
      * @param i The index of the requested element.
@@ -37,6 +44,24 @@ public class MyPoint3DVector {
      */
     public void add(MyPoint3D p) {
         vector.add(p);
+    }
+    
+    /** Removes an element from the vector.
+     * @param i The index of the element to remove.
+     */
+    public void remove(int i) {
+        vector.remove(i);
+    }
+    
+    /** Returns the list as a string.
+     * @return A string with each point of the form "X = x, Y = y".
+     */
+    public String toStringEquals(){
+        String output = "";
+        for(int i = 0; i < size(); i++){
+            output = output + (i+1) + ". " + this.get(i).toStringEquals() + "\n";
+        }
+        return output;
     }
     
 }

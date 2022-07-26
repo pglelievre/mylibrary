@@ -92,7 +92,7 @@ public class MyPoint2DVector {
         vector.remove(i);
     }
 
-    /* Removes an element from the vector.
+    /** Removes an element from the vector.
      * @param p The element to remove.
     public void remove(MyPoint2D p) {
         vector.remove(p);
@@ -417,6 +417,17 @@ public class MyPoint2DVector {
         // Construct the MyPoint2D output object:
         return new MyPoint2D(xc,yc);
 
+    }
+    
+    /** Returns the list as a string.
+     * @return A string with each point of the form "X = x, Y = y".
+     */
+    public String toStringEquals(){
+        String output = "";
+        for(int i = 0; i < size(); i++){
+            output = output + (i+1) + ". " + get(i).toStringEquals() + "\n";
+        }
+        return output;
     }
 
     // -------------------- Private Methods -------------------

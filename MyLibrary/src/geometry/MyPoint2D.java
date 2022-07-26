@@ -347,13 +347,29 @@ public class MyPoint2D {
     /** Provides a formatted string containing the x and y values.
      * @return A string of the form "( x , y )".
      */
-    public String print() {
+    public String toStringParentheses() {
         return String.format("(%+10.4f ,%+10.4f )",getX(),getY());
     }
     
+
+    /** Provides a formatted string containing the x and y values.
+     * @return A string of the form "x y".
+     */
+    public String toStringSpaces() {
+        return getX() + " " + getY();
+    }
+
+    /** Provides a formatted string containing the x and y values.
+     * @return A string of the form "X = x, Y = y".
+     */
+    public String toStringEquals() {
+        return String.format("X = %d, Y = %d", (int)getX(), (int)getY());
+    }
+    
+    // This added for safety but should not be used. Use one of the toString* methods above.
     @Override
     public String toString() {
-        return getX() + " " + getY();
+        return toStringSpaces();
     }
 
     public String toString(double tolzero, int precision) {

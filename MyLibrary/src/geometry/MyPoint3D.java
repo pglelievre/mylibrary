@@ -27,6 +27,14 @@ public class MyPoint3D {
         setXYZ(x,y,z);
     }
     
+    /** Construction from MyPoint2D and z value.
+     * @param p The MyPoint2D holding the X and Y coordinate values.
+     * @param z The z coordinate value.
+     */
+    public MyPoint3D(MyPoint2D p, double z) {
+        setXYZ( p.getX(), p.getY(), z );
+    }
+    
     /** Construction from (i,j) doublet and location on missing direction.
      * @param i
      * @param j
@@ -53,6 +61,13 @@ public class MyPoint3D {
      */
     public MyPoint3D deepCopy() {
         return new MyPoint3D( getX(), getY(), getZ() );
+    }
+
+    /** Deep copies the object to a MyPoint2D object.
+     * @return A new MyPoint2D object copied from this one without the z value.
+     */
+    public MyPoint2D deepCopy2D() {
+        return new MyPoint2D( getX(), getY());
     }
 
     // -------------------- Getters -------------------
@@ -424,16 +439,30 @@ public class MyPoint3D {
     /** Provides a formatted string containing the x and y values.
      * @return A string of the form "( x , y , z )".
      */
-    public String print() {
+    public String toStringParentheses() {
         return String.format("(%+10.4f ,%+10.4f ,%+10.4f )",getX(),getY(),getZ());
     }
-
-    @Override
-    public String toString() {
+    
+    /** Provides a formatted string containing the x and y values.
+     * @return A string of the form "x y z".
+     */
+    public String toStringSpaces() {
         return getX() + " " + getY() + " " + getZ();
     }
 
-    public String toString(double tolzero, int precision) {
+    /** Provides a formatted string containing the x and y values.
+     * @return A string of the form "X = x, Y = y, Z = y".
+     */
+    public String toStringEquals() {
+        return String.format("X = %d, Y = %d, Z = %f", (int)getX(), (int)getY(), (float)getZ());
+    }
+
+    /** Provides a formatted string containing the x and y values.
+     * @param tolzero Any values below this are printed as zero.
+     * @param precision The precision for the printed output.
+     * @return A string of the form "x y z".
+     */
+    public String toStringSpaces(double tolzero, int precision) {
         double xt = getX();
         double yt = getY();
         double zt = getZ();
@@ -457,8 +486,17 @@ public class MyPoint3D {
         }
     }
     
+    /** Provides a formatted string containing the x and y values.
+     * @return A string of the form "x, y, z".
+     */
     public String toStringCSV() {
         return (float)getX() + ", " + (float)getY() + ", " + (float)getZ();
+    }
+    
+    // This added for safety but should not be used. Use one of the toString* methods above.
+    @Override
+    public String toString() {
+        return toStringSpaces();
     }
 
 }
