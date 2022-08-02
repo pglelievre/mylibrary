@@ -17,28 +17,32 @@ public class ColorMap {
     /** Constructor for an arbitrary ColorVector.
      * @param cv Vector of Color objects to use for the colormap.
      * @param cycles Number of times to cycle the colours.
+     * @param cont Continuous (true) or piecewise (false) colormap.
      * @param v1 Value corresponding to the lower end of the colormap
      * @param v2 Value corresponding to the upper end of the colormap.
      */
-    public ColorMap(ColorVector cv, int cycles, double v1, double v2) {
+    public ColorMap(ColorVector cv, int cycles, boolean cont, double v1, double v2) {
         setColors(cv);
         colorVector.cycle(cycles);
         setLimits(v1,v2);
+        continuous = cont;
     }
     
     /** Constructor for canned colormaps that are named and defined at the bottom of this class.
      * @param cv Name of canned colormap.
      * @param ncycles Number of times to cycle the colours.
+     * @param cont Continuous (true) or piecewise (false) colormap.
      * @param v1 Value corresponding to the lower end of the colormap
      * @param v2 Value corresponding to the upper end of the colormap.
      */
-    public ColorMap(String cv, int ncycles, double v1, double v2) {
+    public ColorMap(String cv, int ncycles, boolean cont, double v1, double v2) {
         switch(cv){
             case "hsv": hsv(); break;
             default: rgb(); break;
         }
         colorVector.cycle(ncycles);
         setLimits(v1,v2);
+        continuous = cont;
     }
     
     /** Setter for the list of Color objects to use for the colormap.
@@ -56,6 +60,8 @@ public class ColorMap {
         value1 = v1;
         value2 = v2;
     }
+    
+    public final void setContinuous(boolean cont) { continuous = cont; }
     
     private boolean check() {
         if ( colorVector==null ) { return false; }
