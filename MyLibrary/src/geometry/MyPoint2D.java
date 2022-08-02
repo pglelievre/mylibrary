@@ -359,11 +359,20 @@ public class MyPoint2D {
         return getX() + " " + getY();
     }
 
-    /** Provides a formatted string containing the x and y values.
+    /** Provides a formatted string containing the x and y values cast as integers.
      * @return A string of the form "X = x, Y = y".
      */
     public String toStringEquals() {
         return String.format("X = %d, Y = %d", (int)getX(), (int)getY());
+    }
+
+    /** Provides a formatted string containing the x and y values cast as integers.
+     * @param sx String to use for x before the equals sign.
+     * @param sy String to use for y before the equals sign.
+     * @return A string of the form "[sx] = x, [sy] = y".
+     */
+    public String toStringEquals(String sx, String sy) {
+        return String.format( sx.trim() + " = %d, " + sy.trim() + " = %d", (int)getX(), (int)getY());
     }
     
     // This added for safety but should not be used. Use one of the toString* methods above.

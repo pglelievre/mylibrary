@@ -436,13 +436,26 @@ public class MyPoint2DVector implements SessionIO {
 
     }
     
-    /** Returns the list as a string.
+    /** Returns the list as a string. The x and y values are cast as integers.
      * @return A string with each point of the form "X = x, Y = y".
      */
     public String toStringEquals(){
         String output = "";
         for(int i = 0; i < size(); i++){
             output = output + (i+1) + ". " + get(i).toStringEquals() + "\n";
+        }
+        return output;
+    }
+    
+    /** Returns the list as a string. The x and y values are cast as integers.
+     * @param sx String to use for x before the equals sign.
+     * @param sy String to use for y before the equals sign.
+     * @return A string with each point of the form "[sx] = x, [sy] = y".
+     */
+    public String toStringEquals(String sx, String sy){
+        String output = "";
+        for(int i = 0; i < size(); i++){
+            output = output + (i+1) + ". " + get(i).toStringEquals(sx,sy) + "\n";
         }
         return output;
     }

@@ -436,28 +436,38 @@ public class MyPoint3D {
 
     // -------------------- File I/O -------------------
 
-    /** Provides a formatted string containing the x and y values.
+    /** Provides a formatted string containing the x, y and z values.
      * @return A string of the form "( x , y , z )".
      */
     public String toStringParentheses() {
         return String.format("(%+10.4f ,%+10.4f ,%+10.4f )",getX(),getY(),getZ());
     }
     
-    /** Provides a formatted string containing the x and y values.
+    /** Provides a formatted string containing the x, y and z values.
      * @return A string of the form "x y z".
      */
     public String toStringSpaces() {
         return getX() + " " + getY() + " " + getZ();
     }
 
-    /** Provides a formatted string containing the x and y values.
+    /** Provides a formatted string containing the x, y and z values. The x and y values are cast as integers.
      * @return A string of the form "X = x, Y = y, Z = y".
      */
     public String toStringEquals() {
         return String.format("X = %d, Y = %d, Z = %f", (int)getX(), (int)getY(), (float)getZ());
     }
 
-    /** Provides a formatted string containing the x and y values.
+    /** Provides a formatted string containing the x, y and z values. The x and y values are cast as integers.
+     * @param sx String to use for x before the equals sign.
+     * @param sy String to use for y before the equals sign.
+     * @param sz String to use for z before the equals sign.
+     * @return A string of the form "[sx] = x, [sy] = y, [sz] = z".
+     */
+    public String toStringEquals(String sx, String sy, String sz) {
+        return String.format( sx.trim() + " = %d, " + sy.trim() + " = %d" + sz.trim() + " = %f", (int)getX(), (int)getY(), (int)getZ());
+    }
+
+    /** Provides a formatted string containing the x, y and z values.
      * @param tolzero Any values below this are printed as zero.
      * @param precision The precision for the printed output.
      * @return A string of the form "x y z".

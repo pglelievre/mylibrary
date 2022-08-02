@@ -57,13 +57,27 @@ public class MyPoint3DVector implements SessionIO {
         vector.remove(i);
     }
     
-    /** Returns the list as a string.
-     * @return A string with each point of the form "X = x, Y = y".
+    /** Returns the list as a string. The x and y values are cast as integers.
+     * @return A string with each point of the form "X = x, Y = y, Z = y".
      */
     public String toStringEquals(){
         String output = "";
         for(int i = 0; i < size(); i++){
             output = output + (i+1) + ". " + this.get(i).toStringEquals() + "\n";
+        }
+        return output;
+    }
+    
+    /** Returns the list as a string. The x and y values are cast as integers.
+     * @param sx String to use for x before the equals sign.
+     * @param sy String to use for y before the equals sign.
+     * @param sz String to use for z before the equals sign.
+     * @return A string with each point of the form "[sx] = x, [sy] = y, [sz] = y".
+     */
+    public String toStringEquals(String sx, String sy, String sz){
+        String output = "";
+        for(int i = 0; i < size(); i++){
+            output = output + (i+1) + ". " + this.get(i).toStringEquals(sx,sy,sz) + "\n";
         }
         return output;
     }
