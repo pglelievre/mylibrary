@@ -27,11 +27,11 @@ public class ColorVector {
     
     /*
     public ColorVector deepCopy() {
-        ColorVector s = new ColorVector();
+        ColorVector cv = new ColorVector();
         for (int i=0 ; i<size() ; i++ ) {
-            s.add(get(i));
+            cv.add(get(i));
         }
-        return s;
+        return cv;
     }
     */
 
@@ -48,6 +48,10 @@ public class ColorVector {
     public int getRed(int i) { return list.get(i).getRed(); }
     public int getGreen(int i) { return list.get(i).getGreen(); }
     public int getBlue(int i) { return list.get(i).getBlue(); }
+    
+    public boolean isCyclic() {
+        return ( getFirst().getRGB() == getLast().getRGB() );
+    }
 
     // -------------------- Setters -------------------
 
@@ -55,7 +59,7 @@ public class ColorVector {
 
     // -------------------- Public Wrappers -------------------
 
-    //public void clear() { list.clear(); }
+    public void clear() { list.clear(); }
 
     public void add(Color s) { list.add(s); }
 
@@ -64,7 +68,27 @@ public class ColorVector {
     //public void addAll(Color[] array) { list.addAll(Arrays.asList(array)); }
 
     //public void remove(int i) { list.remove(i); }
-
+    
+    public void removeLast() { list.remove(size()-1); }
+    
+    // Cycles the colours ncycles times.
+    public void cycle(int ncycles) {
+        if (list.isEmpty()) { return; }
+        if ( ncycles <= 1) { return; }
+        // Check if colormap is cyclic (same first and last colours):
+        boolean isCyclic = isCyclic();
+        // If cyclic then remove the last colour now and add it back in later:
+        if (isCyclic) { removeLast(); }
+        // Cycle the colours:
+        for ( int c=0 ; c<ncycles ; c++ ) { // loop over the cycles
+            for ( int i=0 ; i<size() ; i++ ) { // loop over the colours
+                list.add(get(i));
+            }
+        }
+        // May need to add the last colour back in:
+        if (isCyclic) { add( getFirst() ); }
+    }
+    
     // -------------------- Public Methods -------------------
     
 }

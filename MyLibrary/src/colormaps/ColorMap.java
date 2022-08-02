@@ -1,6 +1,7 @@
 package colormaps;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import vectors.ColorVector;
 
 /** A class that deals with how to generate a coloured image based on a gridded set of values.
@@ -13,13 +14,30 @@ public class ColorMap {
     double value2; // Value corresponding to the upper end of the colormap.
     boolean continuous = true; // Continuous or piecewise colormap.
     
-    /** Constructor.
+    /** Constructor for an arbitrary ColorVector.
      * @param cv Vector of Color objects to use for the colormap.
+     * @param cycles Number of times to cycle the colours.
      * @param v1 Value corresponding to the lower end of the colormap
      * @param v2 Value corresponding to the upper end of the colormap.
      */
-    public ColorMap(ColorVector cv, double v1, double v2) {
+    public ColorMap(ColorVector cv, int cycles, double v1, double v2) {
         setColors(cv);
+        colorVector.cycle(cycles);
+        setLimits(v1,v2);
+    }
+    
+    /** Constructor for canned colormaps that are named and defined at the bottom of this class.
+     * @param cv Name of canned colormap.
+     * @param ncycles Number of times to cycle the colours.
+     * @param v1 Value corresponding to the lower end of the colormap
+     * @param v2 Value corresponding to the upper end of the colormap.
+     */
+    public ColorMap(String cv, int ncycles, double v1, double v2) {
+        switch(cv){
+            case "hsv": hsv(); break;
+            default: rgb(); break;
+        }
+        colorVector.cycle(ncycles);
         setLimits(v1,v2);
     }
     
@@ -87,6 +105,50 @@ public class ColorMap {
         b = (int)( w1*(double)c1.getBlue()  + w2*(double)c2.getBlue()  );
         return new Color(r,g,b);
         
+    }
+    
+    /** Converts a double array to a BufferedImage based on the current colour map information.
+     * @param data 2D double array of values that is converted to a BufferedImage.
+     * @return The BufferedImage object.
+     */
+    public BufferedImage getBufferedImage(double[][] data) {
+        // Create a buffered image of the correct size:
+        int nrow = data.length;
+        int ncol = data[0].length;
+        BufferedImage image = new BufferedImage( ncol, nrow, BufferedImage.TYPE_INT_RGB); // width, height, ...
+        for ( int i=0; i<nrow; i++ ){
+            for ( int j=0; j<ncol; j++ ){
+                Color color = interpolate( data[i][j] );
+                image.setRGB(i,j,color.getRGB());
+            }
+        }
+        return image;
+    }
+    
+    // BELOW ARE ALL THE CANNED COLORMAPS
+    
+    // This one corresponds to what Mehrad originally coded.
+    private void rgb() {
+        colorVector.clear();
+        colorVector.add(new Color( 255,   0,   0 ));
+        colorVector.add(new Color( 255, 255,   0 ));
+        colorVector.add(new Color(   0, 255,   0 ));
+        colorVector.add(new Color(   0, 255, 255 ));
+        colorVector.add(new Color(   0,   0, 255 ));
+    }
+    
+    private void hsv() {
+        colorVector.clear();
+        colorVector.add(Color.RED);
+        colorVector.add(new Color( 255, 167,   0 ));
+        colorVector.add(new Color( 175, 255,   0 ));
+        colorVector.add(new Color(   8, 255,   0 ));
+        colorVector.add(new Color(   0, 255, 159 ));
+        colorVector.add(new Color(   0, 183, 255 ));
+        colorVector.add(new Color(   0,  16, 255 ));
+        colorVector.add(new Color( 151,   0, 255 ));
+        colorVector.add(new Color( 255,   0, 191 ));
+        colorVector.add(Color.RED);
     }
     
 }
