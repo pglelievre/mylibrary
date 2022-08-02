@@ -20,7 +20,20 @@ public class MyPoint2DVector implements SessionIO {
 
     // ------------------- Constructor ------------------
 
-    public void MyPoint2DVector() {}
+    public MyPoint2DVector() {}
+    
+    /** Constructor to create vector from two arrays, one for x and another for y.
+    * @param x Array containing X values for MyPoint2D.
+    * @param y Array containing Y values for MyPoint2D.
+    */
+    public MyPoint2DVector(double[] x, double[] y){
+        int n = x.length;
+        if ( n != y.length ){ return; }
+        for(int i = 0; i < n; i++){
+            MyPoint2D temp = new MyPoint2D( x[i], y[i] );
+            add(temp);
+        }
+    }
 
     // -------------------- Deep Copy -------------------
 
@@ -68,7 +81,7 @@ public class MyPoint2DVector implements SessionIO {
     /** Adds an element to the end of the vector.
      * @param p The MyPoint2D object to add to the end of the vector.
      */
-    public void add(MyPoint2D p) {
+    public final void add(MyPoint2D p) {
         vector.add(p);
     }
 

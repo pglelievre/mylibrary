@@ -19,7 +19,7 @@ public class MyPoint3DVector implements SessionIO {
 
     // ------------------- Constructor ------------------
 
-    public void MyPoint3DVector() {}
+    public MyPoint3DVector() {}
 
     // -------------------- Public Methods -------------------
 
