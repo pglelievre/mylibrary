@@ -80,8 +80,9 @@ public class ColorVector {
         // If cyclic then remove the last colour now and add it back in later:
         if (isCyclic) { removeLast(); }
         // Cycle the colours:
+        int n = size();
         for ( int c=0 ; c<ncycles ; c++ ) { // loop over the cycles
-            for ( int i=0 ; i<size() ; i++ ) { // loop over the colours
+            for ( int i=0 ; i<n ; i++ ) { // loop over the colours
                 list.add(get(i));
             }
         }

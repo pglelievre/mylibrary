@@ -66,7 +66,7 @@ public class ColorMap {
     private boolean check() {
         if ( colorVector==null ) { return false; }
         if ( colorVector.isEmpty() ) { return false; }
-        return ( colorVector.size() <= 0 );
+        return ( colorVector.size() >= 2 );
     }
     
     /** Interpolates the appropriate color to use for a given value.
@@ -80,8 +80,8 @@ public class ColorMap {
         if ( value1 == value2 ) { return null; }
         
         // Check for value out of bounds:
-        if ( value >= value1 ) { return colorVector.getFirst(); }
-        if ( value <= value2 ) { return colorVector.getLast(); }
+        if ( value <= value1 ) { return colorVector.getFirst(); }
+        if ( value >= value2 ) { return colorVector.getLast(); }
         
         double n = (double)( colorVector.size() );
         if (continuous) { n = n - 1.0; }
@@ -89,7 +89,7 @@ public class ColorMap {
         
         // Interpolate between points (value1,0) and (value2,n):
         double slope = n / ( value2 - value1 );
-        double d = value1 + slope*( value - value1 );
+        double d = slope*( value - value1 );
         
         // Determine index for colour below that interpolated location:
         double f = Math.floor(d);
