@@ -131,7 +131,10 @@ public class ColorMap {
         return image;
     }
     
-    // BELOW ARE ALL THE CANNED COLORMAPS
+    // BELOW ARE ALL THE CANNED COLORMAPS.
+    // More can be found here:
+    // https://github.com/mahdilamb/colormap
+    // https://github.com/mahdilamb/colormap/tree/main/src/main/java/net/mahdilamb/colormap/reference
     
     // This one corresponds to what Mehrad originally coded.
     private void rgb() {
