@@ -13,9 +13,9 @@ import javax.swing.SwingWorker;
  */
 public class MatrixReader extends SwingWorker<MatrixReaderReturnObject, Void> {
     
-    private File file;
-    private JTextArea textArea;
-    private JButton buttonCancel;
+    private final File file;
+    private final JTextArea textArea;
+    private final JButton buttonCancel;
     MatrixReaderReturnObject returnObj;
     
     public MatrixReader(File file, JTextArea textArea, JButton buttonCancel) {

@@ -13,9 +13,9 @@ import javax.swing.SwingWorker;
  */
 public class CommandRunner extends SwingWorker<String, Void> {
     
-    private String command;
-    private JTextArea textArea;
-    private JButton buttonCancel;
+    private final String command;
+    private final JTextArea textArea;
+    private final JButton buttonCancel;
     private String message;
     
     public CommandRunner(String command, JTextArea textArea, JButton buttonCancel) {

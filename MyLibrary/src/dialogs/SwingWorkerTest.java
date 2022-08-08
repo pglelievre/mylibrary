@@ -27,7 +27,7 @@ public class SwingWorkerTest {
                     // Read matrix file:
                     title = "Read Matrix File Using Java";
                     File file = new File("/Users/Peter/Work/Temp/junk_big_file.txt");
-                    MatrixReaderDialog matrixReaderDialog = new MatrixReaderDialog(title,file);
+                    MatrixReaderDialog matrixReaderDialog = new MatrixReaderDialog(null,title,file);
                     message = matrixReaderDialog.getMessage();
                     double[][] data = matrixReaderDialog.getData();
                     if (message==null) {
@@ -42,7 +42,7 @@ public class SwingWorkerTest {
                     // Run external program:
                     title = "Read Matrix File Using Fortran";
                     String cmd = "/Users/Peter/Work/Temp/junk_read_file";
-                    CommandRunnerDialog commandRunnerDialog = new CommandRunnerDialog(title,cmd);
+                    CommandRunnerDialog commandRunnerDialog = new CommandRunnerDialog(null,title,cmd);
                     message = commandRunnerDialog.getMessage();
                     if (message==null) {
                         Dialogs.inform(null,"Success!",title);
