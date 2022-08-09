@@ -39,14 +39,14 @@ public class MatrixReader extends SwingWorker<MatrixReaderReturnObject, Void> {
         try {
             scanner = new Scanner(file);
         } catch (Exception ex) {
-            return new MatrixReaderReturnObject("Matrix file not found.");
+            return new MatrixReaderReturnObject("Matrix file not found:\n"+ex.toString());
         }
         int nrow, ncol;
         try {
             nrow = scanner.nextInt();
             ncol = scanner.nextInt();
         } catch (Exception ex) {
-            return new MatrixReaderReturnObject("Error reading matrix size information from file.");
+            return new MatrixReaderReturnObject("Error reading matrix size information from file:\n"+ex.toString());
         }
         
         // Check size of data array provided:
@@ -74,7 +74,7 @@ public class MatrixReader extends SwingWorker<MatrixReaderReturnObject, Void> {
                 try {
                     d[i][j] = scanner.nextDouble();
                 } catch (Exception ex) {
-                    return new MatrixReaderReturnObject("Error reading matrix data from file.");
+                    return new MatrixReaderReturnObject("Error reading matrix data from file:\n"+ex.toString());
                 }
             }
             s = percentDone.update(j);
@@ -82,7 +82,9 @@ public class MatrixReader extends SwingWorker<MatrixReaderReturnObject, Void> {
             //setProgress( (int)( (j+1)*100/(float)ncol) );
         }
         scanner.close();
+        
         return new MatrixReaderReturnObject(d);
+        
     }
     
     // The done() method is called when the doInBackground() method finishes. 
@@ -92,7 +94,7 @@ public class MatrixReader extends SwingWorker<MatrixReaderReturnObject, Void> {
         try {
             returnObj = get();
         } catch (Exception ex) {
-            returnObj = new MatrixReaderReturnObject("Unexpected MatrixReader error: please inform developers.");
+            returnObj = new MatrixReaderReturnObject("Unexpected MatrixReader error, please inform developers:\n"+ex.toString());
         }
     }
 

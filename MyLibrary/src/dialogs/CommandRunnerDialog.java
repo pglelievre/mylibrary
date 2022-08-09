@@ -19,7 +19,7 @@ public final class CommandRunnerDialog extends JDialog {
     
     private final CommandRunner commandRunner;
     
-    public CommandRunnerDialog(JFrame frame, String title, String command) {
+    public CommandRunnerDialog(JFrame frame, String title, ProcessBuilder processBuilder) {
         
         // Make modal, set title, size:
         super(frame,title,true); // owner, title, modal
@@ -66,7 +66,7 @@ public final class CommandRunnerDialog extends JDialog {
         add(buttonCancel,BorderLayout.SOUTH);
         
         // Must start execution before setting visible!
-        commandRunner = new CommandRunner(command,textArea,buttonCancel);
+        commandRunner = new CommandRunner(processBuilder,textArea,buttonCancel);
         commandRunner.addPropertyChangeListener( new SwingWorkerCompletionWaiter(this) );
         commandRunner.execute();
         
