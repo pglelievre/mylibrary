@@ -36,7 +36,13 @@ public class HasImage implements SessionIO {
         if (load) { loadImage(); }
     }
     
+    public HasImage(BufferedImage im) {
+        // Set the image:
+        image = im;
+    }
+    
     private void loadImage() {
+        if ( file==null ) { return; }
         try { image = ImageIO.read(file); } catch (IOException e) {}
     }
     
@@ -52,7 +58,9 @@ public class HasImage implements SessionIO {
         // Create new object:
         HasImage newHasImage = new HasImage();
         // Copy the file:
-        newHasImage.setFile( new File(this.file.toURI()) );
+        if ( file != null ) {
+            newHasImage.setFile( new File(this.file.toURI()) );
+        }
         // Check for an image:
         if (this.image==null) { return newHasImage; }
         // Copy the image:
@@ -64,6 +72,9 @@ public class HasImage implements SessionIO {
         // Return the new object:
         return newHasImage;
     }
+
+    // -------------------- Setters --------------------
+    
     private void setFile(File f) {
         file = f;
     }
@@ -80,6 +91,7 @@ public class HasImage implements SessionIO {
             return image.getWidth();
         }
     }
+    
     public int getHeight() {
         if (image==null) {
             return 0;
@@ -93,6 +105,7 @@ public class HasImage implements SessionIO {
     public BufferedImage getImage() {
         // Try to read the image if necessary:
         if ( image==null ) {
+            if ( file==null ) { return null; }
             // Try to read the image file:
             try { image = ImageIO.read(file); } catch (IOException e) {}
         }
@@ -116,38 +129,43 @@ public class HasImage implements SessionIO {
 
     // -------------------- Public Methods --------------------
     
-    /** Returns true if the file for this object is the same as the supplied file.
+    /** Returns true if the file for this object is null or the same as the supplied file.
      * @param f
      * @return  */
     public boolean compareFile(File f) {
+        if ( file==null ) { return true; }
         return ( file.compareTo(f) == 0 );
     }
 
-    /** Returns the name of the file name (the file name minus path and extension).
+    /** Returns the name of the file name (the file name minus path and extension) or null if the file is null.
      * @return  */
     public String getName() {
+        if ( file==null ) { return null; }
         return FileUtils.getName(file);
     }
 
-    /** Returns the name of the file name with extension (the file name minus path).
+    /** Returns the name of the file name with extension (the file name minus path) or null if the file is null.
      * @return  */
     public String getNameExt() {
+        if ( file==null ) { return null; }
         return FileUtils.getNameExt(file);
     }
 
-    /** Returns the root of the file name (the file name minus extension).
+    /** Returns the root of the file name (the file name minus extension) or null if the file is null.
      * @return  */
     public String getRoot() {
+        if ( file==null ) { return null; }
         return FileUtils.getRoot(file);
     }
 
-    /** Returns the file name (full absolute path + name + extension).
+    /** Returns the file name (full absolute path + name + extension) or null if the file is null.
      * @return  */
     public String fileString() {
+        if ( file==null ) { return null; }
         return file.getAbsolutePath();
     }
     
-    /** Returns a string with the file URI in it, or "null".
+    /** Returns a string with the file URI in it, or "null" if the file is null.
      * @return  */
     public String fileURIString() {
         String s;
