@@ -1,2 +1,2 @@
 # mylibrary
-Java code required for all my other repositories.
+Java code required for many of my other repositories.
