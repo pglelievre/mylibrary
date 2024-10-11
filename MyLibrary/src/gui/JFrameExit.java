@@ -34,10 +34,19 @@ public abstract class JFrameExit extends JFrame {
     
     // -------------------- Public dialog methods --------------------
     
-    protected abstract String versionString();
+    protected abstract String versionNumberString(); // you  must be able to parse this as a double
+    //protected abstract String versionString(); // you could add more information here e.g. a date.
+    public String versionString() {
+        return versionNumberString(); // you could override and add more information here e.g. a date.
+    }
     protected abstract String rulesString();
     protected abstract String authorString();
     protected abstract String contactString();
+    
+    public final int versionInt() {
+        double d =  Double.parseDouble( versionNumberString() );
+        return (int)Math.floor(d);
+    }
     
     public final String aboutString() {
         String t = name + " version " + versionString() + System.lineSeparator() + System.lineSeparator()
